@@ -37,7 +37,7 @@ def vector_search(driver, query_text, top_k=5):
         from neo4j_graphrag.retrievers import VectorRetriever
         retriever = VectorRetriever(
             driver=driver,
-            index_name="entity_embeddings",
+            index_name="chunk_embeddings",
             embedder=embedder,
             return_properties=["name", "text"],
         )
@@ -107,7 +107,7 @@ def hybrid_search(driver, question, top_k=5):
         # This retriever does vector search then follows graph relationships
         retriever = VectorCypherRetriever(
             driver=driver,
-            index_name="entity_embeddings",
+            index_name="chunk_embeddings",
             embedder=embedder,
             retrieval_query="""
                 WITH node, score
@@ -143,7 +143,7 @@ def graphrag_search(driver, question):
 
         retriever = VectorRetriever(
             driver=driver,
-            index_name="entity_embeddings",
+            index_name="chunk_embeddings",
             embedder=embedder,
             return_properties=["name", "text"],
         )
@@ -244,19 +244,12 @@ def run_sample_queries(driver):
     # 1. Basic graph stats
     print("\n--- Graph Statistics ---")
     stats = cypher_query(driver, """
-        CALL db.labels() YIELD label
-        CALL db.stats.retrieve(label) YIELD count
-        RETURN label, count
+        MATCH (n)
+        WITH labels(n) AS lbls, count(*) AS cnt
+        UNWIND lbls AS label
+        RETURN label, sum(cnt) AS count
         ORDER BY count DESC
     """)
-    if not stats:
-        stats = cypher_query(driver, """
-            MATCH (n)
-            WITH labels(n) AS lbls, count(*) AS cnt
-            UNWIND lbls AS label
-            RETURN label, sum(cnt) AS count
-            ORDER BY count DESC
-        """)
     print_results(stats, "Node Counts")
 
     # 2. Vector search example

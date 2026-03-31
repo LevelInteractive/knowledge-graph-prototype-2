@@ -1,0 +1,308 @@
+{
+  "processed": 50,
+  "failed": 0,
+  "skipped": 0,
+  "errors": [],
+  "documents": [
+    {
+      "meeting_id": "85974223135",
+      "topic": "ANDER + LVL - Biweekly Paid Media Touchpoint",
+      "chars": 25209,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81090852993",
+      "topic": "Ecomm Media Assets (Display Ads)",
+      "chars": 18990,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88624944358",
+      "topic": "StrataTech | LVL - Q2 SEO Strategy Gut Check",
+      "chars": 25026,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89241978851",
+      "topic": "Chord / Level: Bi-Weekly Status Call",
+      "chars": 27623,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89513194464",
+      "topic": "SDR Convo",
+      "chars": 23302,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83481942909",
+      "topic": "LVL / ATS: Monthly Reporting Call",
+      "chars": 26696,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "82178337284",
+      "topic": "C2 Media Kickoff",
+      "chars": 25122,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "86270012720",
+      "topic": "CENTRIC + Level - SEO Touchpoint",
+      "chars": 23652,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89130099441",
+      "topic": "MFB Form A/B Test TB ",
+      "chars": 21489,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84258961779",
+      "topic": "Level // Sloomoo: Performance Meeting ",
+      "chars": 28445,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "82886618375",
+      "topic": "VECT + LVL: Status Call",
+      "chars": 30773,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81670039443",
+      "topic": "Lindenwood + Level: Global Header and Nav Changes",
+      "chars": 20455,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84258798039",
+      "topic": "[EXT] Level + SGG UK Biweekly",
+      "chars": 20599,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88950306257",
+      "topic": "[GTR x LVL] Account Check-In Call",
+      "chars": 21329,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "87240386691",
+      "topic": "SANDK x LVL - Marketing Call",
+      "chars": 25137,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "82270468029",
+      "topic": "Maureen <> Grant quick connect",
+      "chars": 26934,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "87353307728",
+      "topic": "LVL // AAT Weekly Call (PPC + SEO)",
+      "chars": 27850,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81772221716",
+      "topic": "TaxAct - Performance Campaign Conversion Tracking Discussion",
+      "chars": 25582,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89977045384",
+      "topic": "DCCP & LVL AI Video KO",
+      "chars": 23722,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "87940253769",
+      "topic": "RWA // Level: YouTube Video Creative Brainstorming Session",
+      "chars": 25225,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89650050260",
+      "topic": "Sly / BTR Daily Brief",
+      "chars": 24949,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88609836870",
+      "topic": "BTR: Media Strategy Presentation",
+      "chars": 27604,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81432088700",
+      "topic": "BAM / HYE IRL Meetings",
+      "chars": 32294,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "86092132345",
+      "topic": "MNTN Credits/Briefing Platform x Ultima x Level",
+      "chars": 24976,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84890497270",
+      "topic": "TaxAct Social Organic - Content Calendar and Scheduling",
+      "chars": 23301,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88401741530",
+      "topic": "Snyk ABM Strategy",
+      "chars": 26916,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84346176815",
+      "topic": "LVL // COUNTRY Financial Weekly Meeting",
+      "chars": 29232,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81428533129",
+      "topic": "CRM Optimisation Focus Areas Review",
+      "chars": 28009,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83681889272",
+      "topic": "FOOL | LVL - BiWeekly Reporting Call",
+      "chars": 23262,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89388337013",
+      "topic": "Level x IRAF Paid Media Call",
+      "chars": 27840,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "86498751657",
+      "topic": "BAM x Maroline | CEU Events Invite Technical Brief",
+      "chars": 23161,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81046059182",
+      "topic": "Level // Northbridge Performance",
+      "chars": 31434,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83927985922",
+      "topic": "Level / StrataTech PPC + SEO Weekly Meeting",
+      "chars": 28961,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83470385345",
+      "topic": "NEW LVL // C2 Reporting Call",
+      "chars": 28639,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88632300506",
+      "topic": "LVL/BMR Weekly Status Calls",
+      "chars": 22689,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83532288160",
+      "topic": "Level // Waldron: Monthly Reporting",
+      "chars": 28424,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81619166564",
+      "topic": "[Internal Placeholder] INS - Media Strategy Review",
+      "chars": 31321,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84258961779",
+      "topic": "Level // Sloomoo: Performance Meeting ",
+      "chars": 26081,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89153611955",
+      "topic": "Angelcare Status",
+      "chars": 22865,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "82775489998",
+      "topic": "[CARE / ARC] Bi-Weekly Status Call",
+      "chars": 24095,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "89549082703",
+      "topic": "Bettina x Vince Connect ",
+      "chars": 24958,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "88095711531",
+      "topic": "NBU | LVL: BQ Consultation",
+      "chars": 25037,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "84227146332",
+      "topic": "Lisa & Josh 1:1 - NEW",
+      "chars": 26012,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83672410875",
+      "topic": "BAM/Ultima Status Meeting ",
+      "chars": 25625,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83204488625",
+      "topic": "Jenn & Josh talk Sprout",
+      "chars": 22881,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "83794805558",
+      "topic": "CyberTex/Level Weekly Meeting",
+      "chars": 24022,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "82769310983",
+      "topic": "LVL // OneDigital Kick Off",
+      "chars": 26810,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "87695276357",
+      "topic": "ROSS & LVL Development Calls",
+      "chars": 26279,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81390719630",
+      "topic": "Level Agency <> Pushpay Status Call",
+      "chars": 24946,
+      "status": "ok"
+    },
+    {
+      "meeting_id": "81419760167",
+      "topic": "LVL: AVN OC v. LA",
+      "chars": 25571,
+      "status": "ok"
+    }
+  ]
+}

@@ -477,11 +477,11 @@ async def run_pipeline():
             result = await pipeline.run_async(
                 text=doc_text,
                 document_metadata={
-                    "meeting_id": meeting_id,
-                    "meeting_uuid": meeting["uuid"],
-                    "topic": meeting.get("topic", ""),
-                    "host_email": meeting.get("host_email", ""),
-                    "hubspot_id": meeting.get("hubspot_id", ""),
+                    "meeting_id": str(meeting_id),
+                    "meeting_uuid": str(meeting.get("uuid", "")),
+                    "topic": str(meeting.get("topic", "")),
+                    "host_email": str(meeting.get("host_email", "")),
+                    "hubspot_id": str(meeting.get("hubspot_id", "")),
                 },
             )
             results["processed"] += 1
