@@ -1,8 +1,14 @@
 {
-  "processed": 50,
-  "failed": 0,
+  "processed": 49,
+  "failed": 1,
   "skipped": 0,
-  "errors": [],
+  "errors": [
+    {
+      "meeting_id": "82775489998",
+      "topic": "[CARE / ARC] Bi-Weekly Status Call",
+      "error": "Error code: 400 - {'error': {'message': \"We could not parse the JSON body of your request. (HINT: This likely means you aren't using your HTTP library correctly. The OpenAI API expects a JSON payload, but what was sent was not valid JSON. If you have trouble figuring out how to fix this, please contact us through our help center at help.openai.com.)\", 'type': 'invalid_request_error', 'param': None, 'code': None}}"
+    }
+  ],
   "documents": [
     {
       "meeting_id": "85974223135",
@@ -236,12 +242,6 @@
       "meeting_id": "89153611955",
       "topic": "Angelcare Status",
       "chars": 22865,
-      "status": "ok"
-    },
-    {
-      "meeting_id": "82775489998",
-      "topic": "[CARE / ARC] Bi-Weekly Status Call",
-      "chars": 24095,
       "status": "ok"
     },
     {
