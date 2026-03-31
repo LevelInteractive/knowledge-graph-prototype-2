@@ -20,7 +20,7 @@ from neo4j_graphrag.embeddings import OpenAIEmbeddings
 
 load_dotenv()
 
-NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7688")
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7687")
 NEO4J_USER = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "kg-eval-password")
 
@@ -30,34 +30,53 @@ def get_driver():
 
 
 def vector_search(driver, query_text, top_k=5):
-    """Search for similar chunks using vector embeddings."""
+    """Search for similar meeting summaries using vector embeddings."""
     embedder = OpenAIEmbeddings(model="text-embedding-3-small")
 
     try:
         from neo4j_graphrag.retrievers import VectorRetriever
         retriever = VectorRetriever(
             driver=driver,
-            index_name="chunk_embeddings",
+            index_name="summary_embeddings",
             embedder=embedder,
-            return_properties=["name", "text"],
+            return_properties=["text"],
         )
         results = retriever.search(query_text=query_text, top_k=top_k)
         return results
     except Exception as e:
         print(f"VectorRetriever failed: {e}")
-        # Fallback: try chunk index
-        try:
-            retriever = VectorRetriever(
-                driver=driver,
-                index_name="chunk_embeddings",
-                embedder=embedder,
-                return_properties=["text"],
-            )
-            results = retriever.search(query_text=query_text, top_k=top_k)
-            return results
-        except Exception as e2:
-            print(f"Chunk vector search also failed: {e2}")
-            return None
+        return None
+
+
+NEO4J_SCHEMA = """
+Node labels and properties:
+  Meeting (topic, start_time, end_time, uuid, meeting_id, sentiment_score, meeting_type, is_recurring, host_email)
+  Person (name, email, department, role_type, seniority_level, first_name, last_name, status)
+  Client (client_name, client_code, internal_client_name, airtable_id, hubspot_id)
+  ActionItem (description, action_id, source_meeting_uuid)
+  Topic (label, summary, topic_id)
+  Summary (text, summary_id, source)
+  Analysis (analysis_type, output_markdown, analysis_datetime, status)
+  SlackChannel (channel_name, slack_channel_id)
+  Domain (name)
+
+Relationships:
+  (Meeting)-[:ABOUT]->(Client)
+  (Person)-[:ATTENDED]->(Meeting)
+  (Person)-[:INVITED_TO]->(Meeting)
+  (Meeting)-[:PRODUCED]->(ActionItem)
+  (Meeting)-[:DISCUSSED]->(Topic)
+  (Meeting)-[:HAS_SUMMARY]->(Summary)
+  (Meeting)-[:HAS_ANALYSIS]->(Analysis)
+  (SlackChannel)-[:HOSTED]->(Meeting)
+  (Person)-[:WORKS_FOR]->(Client)
+  (Person)-[:HAS_ROLE]->(Client)
+  (Client)-[:HAS_DOMAIN]->(Domain)
+  (Client)-[:HAS_CHANNEL]->(SlackChannel)
+  (Person)-[:MEMBER_OF]->(SlackChannel)
+
+Important: Client name is stored in client_name (not name). ActionItem text is in description (not name). Topic title is in label (not name).
+"""
 
 
 def text2cypher_search(driver, question):
@@ -68,16 +87,11 @@ def text2cypher_search(driver, question):
     )
 
     try:
-        from neo4j_graphrag.generation import GraphRAG
-        rag = GraphRAG(
-            llm=llm,
-            driver=driver,
-        )
-        # Try Text2CypherRetriever
         from neo4j_graphrag.retrievers import Text2CypherRetriever
         retriever = Text2CypherRetriever(
             driver=driver,
             llm=llm,
+            neo4j_schema=NEO4J_SCHEMA,
         )
         result = retriever.search(query_text=question)
         return result
@@ -107,19 +121,20 @@ def hybrid_search(driver, question, top_k=5):
         # This retriever does vector search then follows graph relationships
         retriever = VectorCypherRetriever(
             driver=driver,
-            index_name="chunk_embeddings",
+            index_name="summary_embeddings",
             embedder=embedder,
             retrieval_query="""
                 WITH node, score
-                OPTIONAL MATCH (node)-[r]-(connected)
-                RETURN node.name AS name,
-                       labels(node) AS labels,
+                OPTIONAL MATCH (m:Meeting)-[:HAS_SUMMARY]->(node)
+                OPTIONAL MATCH (m)-[:ABOUT]->(c:Client)
+                OPTIONAL MATCH (m)-[:DISCUSSED]->(t:Topic)
+                RETURN node.text AS summary_text,
                        score,
-                       type(r) AS relationship,
-                       connected.name AS connected_name,
-                       labels(connected) AS connected_labels
+                       m.topic AS meeting_topic,
+                       c.client_name AS client,
+                       collect(DISTINCT t.label)[..3] AS topics
                 ORDER BY score DESC
-                LIMIT 20
+                LIMIT 10
             """,
         )
         results = retriever.search(query_text=question, top_k=top_k)
@@ -143,9 +158,9 @@ def graphrag_search(driver, question):
 
         retriever = VectorRetriever(
             driver=driver,
-            index_name="chunk_embeddings",
+            index_name="summary_embeddings",
             embedder=embedder,
-            return_properties=["name", "text"],
+            return_properties=["text"],
         )
 
         rag = GraphRAG(
