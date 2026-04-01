@@ -110,11 +110,50 @@ The built-in entity resolution ran automatically after ingestion. Results from t
 
 Projected cost for all 1,477 meetings: ~$15.30
 
+## Post-Ingestion Entity Resolution (fix_entities.py)
+
+A custom cleanup script (`fix_entities.py`) was created and run to address the entity quality issues identified above. The script connects directly to Neo4j (bolt://host.docker.internal:7688) and performs four cleanup passes:
+
+### Changes Applied
+
+**Before cleanup**: 2,749 entity nodes (2,565 **KGBuilder** nodes)
+**After cleanup**: 2,524 **KGBuilder** nodes (net reduction of 225 nodes, ~8.8%)
+
+| Step                      | Operation                                                                                                           | Count         |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------- |
+| 1. Person Name Resolution | Merged first-name-only Person nodes into full-name equivalents (using employee list + co-occurrence disambiguation) | ~15 merges    |
+| 1. Person Name Resolution | Resolved email-address Person nodes (e.g., "rachel.stockwell@level.agency" -> "Rachel Stockwell")                   | 6 resolved    |
+| 1. Person Name Resolution | Deleted junk Person entries ("agency", "Yvette's/Misty", "Mary/Alicia")                                             | 6 deleted     |
+| 2. Client Cleanup         | Relabeled misclassified Clients to Person (single first names like "Cleo", "Catherine", "Sandra")                   | ~20 relabeled |
+| 2. Client Cleanup         | Relabeled platforms to Organization ("BlackRock", "iShares", "Barstool")                                            | 3 relabeled   |
+| 2. Client Cleanup         | Merged person-name Clients into existing Person nodes ("Keefer Kopco", "Jessica", etc.)                             | 8 merged      |
+| 3. Phantom Meetings       | Relabeled 103 low-signal Meeting entities to Topic (0-1 attendees, not matching real Document topics)               | 103 relabeled |
+| 3. Phantom Meetings       | Deleted 13 generic meeting names ("Budget Meeting", "meeting tomorrow", etc.)                                       | 13 deleted    |
+| 4. General Dedup          | Merged near-duplicate entity names (Levenshtein distance <= 2)                                                      | 5 merges      |
+
+### Results
+
+| Metric             | Before     | After     | Change                        |
+| ------------------ | ---------- | --------- | ----------------------------- |
+| Person nodes       | 528        | 346       | -182 (-34%)                   |
+| - First-name-only  | ~302 (60%) | 128 (37%) | Improved                      |
+| Meeting nodes      | 575        | 403       | -172 (-30%)                   |
+| Client nodes       | 152        | 94        | -58 (-38%)                    |
+| Organization nodes | 43         | 76        | +33 (relabeled from Client)   |
+| Topic nodes        | 37         | 188       | +151 (relabeled from Meeting) |
+
+### Remaining Issues
+
+- 128 first-name-only Person nodes remain (ambiguous: multiple employees share the same first name, e.g., "Kelly" could be Kelly Langley or Kelly Shelton)
+- Some Client nodes are still borderline (company names that aren't in the official client list but may be real companies)
+- The 5 dedup merges included a few questionable cases (short names with distance=2)
+
 ## Files Created
 
 - `ingest_transcripts.py` - Main pipeline: loads meeting data, builds documents, feeds into SimpleKGPipeline
 - `query_graph.py` - CLI query interface with vector search, Text2Cypher, GraphRAG, and raw Cypher
 - `explore_graph.py` - Diagnostic script printing graph statistics and sample data
+- `fix_entities.py` - Post-ingestion entity resolution and cleanup script
 - `ingest_results.json` - Detailed results from the 50-meeting ingestion run
 - `.env` - Environment variables (Neo4j connection, API keys)
 
