@@ -18,7 +18,7 @@ from collections import defaultdict
 import neo4j
 
 # ── Connection ──────────────────────────────────────────────────────────────
-NEO4J_URI = "bolt://host.docker.internal:7688"
+NEO4J_URI = "bolt://host.docker.internal:7691"
 NEO4J_USER = "neo4j"
 NEO4J_PASS = "kg-eval-password"
 

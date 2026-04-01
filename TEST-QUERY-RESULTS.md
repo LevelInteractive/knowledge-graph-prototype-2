@@ -236,7 +236,7 @@ With the schema hint provided, Text2Cypher generates correct Cypher in most case
 
 ### Issues Found and Fixed
 
-1. **Port mismatch:** .env and default had `7688` (HTTP/non-bolt) instead of `7687` (bolt) -- FIXED
+1. **Port mismatch:** .env and default had `7691` (HTTP/non-bolt) instead of `7687` (bolt) -- FIXED
 2. **Index name:** Used `chunk_embeddings` but no chunks/embeddings existed -- FIXED to `summary_embeddings`
 3. **Property names:** Used `name` for return properties but Summary nodes use `text` -- FIXED
 4. **Text2Cypher schema:** No schema hint provided, causing poor Cypher generation -- FIXED with full schema
@@ -253,8 +253,8 @@ Ran `python3 query_graph.py --sample` successfully. All three sample queries (st
 
 | File             | Change                                                                             |
 | ---------------- | ---------------------------------------------------------------------------------- |
-| `.env`           | Changed port from 7688 to 7687                                                     |
-| `query_graph.py` | Changed default URI port from 7688 to 7687                                         |
+| `.env`           | Changed port from 7691 to 7687                                                     |
+| `query_graph.py` | Changed default URI port from 7691 to 7687                                         |
 | `query_graph.py` | Changed vector index name from `chunk_embeddings` to `summary_embeddings`          |
 | `query_graph.py` | Updated `return_properties` from `["name", "text"]` to `["text"]`                  |
 | `query_graph.py` | Added `NEO4J_SCHEMA` constant with full schema description for Text2Cypher         |

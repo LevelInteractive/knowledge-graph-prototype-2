@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-31
 **Tester:** QA Engineer (automated)
-**Neo4j:** bolt://localhost:7688 (neo4j-community-5.26.0, started locally with APOC plugins)
+**Neo4j:** bolt://localhost:7691 (neo4j-community-5.26.0, started locally with APOC plugins)
 
 ---
 
@@ -24,9 +24,9 @@
 
 ## 1. Neo4j Connectivity & Basic Stats -- PASS
 
-Connected successfully to Neo4j at bolt://localhost:7688.
+Connected successfully to Neo4j at bolt://localhost:7691.
 
-**Note:** The original `host.docker.internal:7688` endpoint was unreachable. Neo4j Community 5.26.0 was installed locally with APOC core + extended plugins. The database was re-ingested from scratch.
+**Note:** The original `host.docker.internal:7691` endpoint was unreachable. Neo4j Community 5.26.0 was installed locally with APOC core + extended plugins. The database was re-ingested from scratch.
 
 | Metric              | Count |
 | ------------------- | ----- |
@@ -216,7 +216,7 @@ Entity resolution (`perform_entity_resolution=True` in pipeline config) ran but 
 - Index listing
 - Sample subgraph around "Matt" (most connected entity)
 
-The script required `NEO4J_URI=bolt://localhost:7688` environment variable (defaults to `host.docker.internal:7688` which was unreachable).
+The script required `NEO4J_URI=bolt://localhost:7691` environment variable (defaults to `host.docker.internal:7691` which was unreachable).
 
 ---
 

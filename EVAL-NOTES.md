@@ -112,7 +112,7 @@ Projected cost for all 1,477 meetings: ~$15.30
 
 ## Post-Ingestion Entity Resolution (fix_entities.py)
 
-A custom cleanup script (`fix_entities.py`) was created and run to address the entity quality issues identified above. The script connects directly to Neo4j (bolt://host.docker.internal:7688) and performs four cleanup passes:
+A custom cleanup script (`fix_entities.py`) was created and run to address the entity quality issues identified above. The script connects directly to Neo4j (bolt://host.docker.internal:7691) and performs four cleanup passes:
 
 ### Changes Applied
 

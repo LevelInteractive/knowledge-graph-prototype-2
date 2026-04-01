@@ -30,7 +30,7 @@ DATA_DIR = Path("/workspace/kg_export/data")
 FILES_DIR = Path("/workspace/kg_export/files")
 BATCH_SIZE = 50  # Start with 50 meetings
 
-NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7688")
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7691")
 NEO4J_USER = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "kg-eval-password")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")

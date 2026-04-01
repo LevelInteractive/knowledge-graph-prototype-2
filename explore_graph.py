@@ -17,7 +17,7 @@ import neo4j
 
 load_dotenv()
 
-NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7688")
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://host.docker.internal:7691")
 NEO4J_USER = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "kg-eval-password")
 

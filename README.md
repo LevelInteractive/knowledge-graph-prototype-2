@@ -42,7 +42,7 @@ pip install "neo4j-graphrag[openai]" neo4j python-dotenv
 
 # 3. Create .env
 cat > .env << 'EOF'
-NEO4J_URI=bolt://localhost:7688
+NEO4J_URI=bolt://localhost:7691
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your-password
 OPENAI_API_KEY=your-openai-key
@@ -88,7 +88,7 @@ python3 query_graph.py
 # Quick verification:
 python3 -c "
 from neo4j import GraphDatabase
-d = GraphDatabase.driver('bolt://localhost:7688', auth=('neo4j','your-password'))
+d = GraphDatabase.driver('bolt://localhost:7691', auth=('neo4j','your-password'))
 with d.session() as s:
     r = s.run('MATCH (n) RETURN labels(n)[0] as label, count(*) as cnt ORDER BY cnt DESC')
     for rec in r: print(f'{rec[\"label\"]}: {rec[\"cnt\"]}')
