@@ -165,7 +165,8 @@ def find_meeting_files(meeting_id):
         basename = os.path.basename(f)
         if basename.endswith("_instance.json"):
             result["instance"].append(f)
-        elif "_audio_transcript_" in basename and basename.endswith(".VTT"):
+        elif ("_audio_transcript_" in basename and basename.endswith(".VTT")) or \
+             ("_standalone_transcript" in basename and basename.endswith(".vtt")):
             result["transcript"].append(f)
         elif "_summary_next_steps_" in basename:
             result["next_steps"].append(f)
