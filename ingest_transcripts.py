@@ -390,24 +390,28 @@ def select_meetings_with_content(meetings, lookups):
 
 
 def load_processed_ids():
-    """Load set of already-processed meeting IDs for resume."""
+    """Load set of already-processed meeting UUIDs for resume."""
     if RESUME_FILE.exists():
         with open(RESUME_FILE) as f:
             return set(json.load(f))
     return set()
 
 
-def save_processed_id(meeting_id):
-    """Add a meeting ID to the processed set."""
-    ids = load_processed_ids()
-    ids.add(meeting_id)
+def save_processed_ids(ids):
+    """Save the full processed set to disk."""
     with open(RESUME_FILE, "w") as f:
-        json.dump(sorted(ids), f)
+        json.dump(sorted(ids), f, indent=2)
 
 
-async def process_meeting(pipeline, meeting, lookups, idx, total, semaphore, results):
+async def process_meeting(pipeline, meeting, lookups, idx, total, semaphore, results, processed_ids):
     """Process a single meeting with semaphore-controlled concurrency."""
     meeting_id = str(meeting["id"])
+    meeting_uuid = meeting.get("uuid")
+    if not meeting_uuid:
+        print(f"  SKIP: meeting {meeting_id} has no UUID, cannot track — skipping")
+        results["skipped"] += 1
+        return
+    meeting_uuid = str(meeting_uuid)
     topic = meeting.get("topic", "Unknown")[:60]
 
     async with semaphore:
@@ -420,15 +424,15 @@ async def process_meeting(pipeline, meeting, lookups, idx, total, semaphore, res
             result = await pipeline.run_async(
                 text=doc_text,
                 document_metadata={
-                    "meeting_id": str(meeting_id),
-                    "meeting_uuid": str(meeting.get("uuid", "")),
+                    "meeting_id": meeting_id,
+                    "meeting_uuid": meeting_uuid,
                     "topic": str(meeting.get("topic", "")),
                     "host_email": str(meeting.get("host_email", "")),
                     "hubspot_id": str(meeting.get("hubspot_id", "")),
                 },
             )
             results["processed"] += 1
-            save_processed_id(meeting_id)
+            processed_ids.add(meeting_uuid)
             print(f"  [{results['processed']+results['failed']}/{total}] OK: {topic} ({len(doc_text)} chars)")
 
         except Exception as e:
@@ -437,6 +441,7 @@ async def process_meeting(pipeline, meeting, lookups, idx, total, semaphore, res
             results["failed"] += 1
             results["errors"].append({
                 "meeting_id": meeting_id,
+                "meeting_uuid": meeting_uuid,
                 "error": str(e)[:500],
             })
 
@@ -448,11 +453,11 @@ async def run_pipeline():
     lookups = build_lookup_tables()
     selected_meetings = select_meetings_with_content(lookups["meetings"], lookups)
 
-    # Resume: skip already-processed meetings
+    # Resume: skip already-processed meetings (tracked by UUID)
     processed_ids = load_processed_ids()
     if processed_ids:
         before = len(selected_meetings)
-        selected_meetings = [m for m in selected_meetings if str(m["id"]) not in processed_ids]
+        selected_meetings = [m for m in selected_meetings if m.get("uuid") and str(m["uuid"]) not in processed_ids]
         print(f"  Resume: skipping {before - len(selected_meetings)} already-processed meetings")
 
     # Connect to Neo4j
@@ -511,10 +516,13 @@ async def run_pipeline():
     for batch_start in range(0, total, batch_size):
         batch = selected_meetings[batch_start:batch_start + batch_size]
         tasks = [
-            process_meeting(pipeline, meeting, lookups, i + batch_start, total, semaphore, results)
+            process_meeting(pipeline, meeting, lookups, i + batch_start, total, semaphore, results, processed_ids)
             for i, meeting in enumerate(batch)
         ]
         await asyncio.gather(*tasks)
+
+        # Save progress after each batch (not per-meeting, avoids race conditions)
+        save_processed_ids(processed_ids)
 
         elapsed = time.time() - start_time
         rate = (results["processed"] + results["failed"]) / elapsed if elapsed > 0 else 0
