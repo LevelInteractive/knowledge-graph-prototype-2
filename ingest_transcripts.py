@@ -496,7 +496,7 @@ async def run_pipeline():
         potential_schema=PATTERNS,
         from_pdf=False,
         text_splitter=text_splitter,
-        perform_entity_resolution=True,
+        perform_entity_resolution=False,
         on_error="IGNORE",
     )
 

@@ -1,23 +1,6 @@
 {
-  "processed": 645,
-  "failed": 4,
+  "processed": 199,
+  "failed": 0,
   "skipped": 0,
-  "errors": [
-    {
-      "meeting_id": "81924956379",
-      "error": "Error code: 400 - {'error': {'message': \"We could not parse the JSON body of your request. (HINT: This likely means you aren't using your HTTP library correctly. The OpenAI API expects a JSON payload, but what was sent was not valid JSON. If you have trouble figuring out how to fix this, please contact us through our help center at help.openai.com.)\", 'type': 'invalid_request_error', 'param': None, 'code': None}}"
-    },
-    {
-      "meeting_id": "82644634140",
-      "error": "Failed to generate embedding with OpenAI: Error code: 400 - {'error': {'message': \"We could not parse the JSON body of your request. (HINT: This likely means you aren't using your HTTP library correctly. The OpenAI API expects a JSON payload, but what was sent was not valid JSON. If you have trouble figuring out how to fix this, please contact us through our help center at help.openai.com.)\", 'type': 'invalid_request_error', 'param': None, 'code': None}}"
-    },
-    {
-      "meeting_id": "82128856210",
-      "error": "Failed to generate embedding with OpenAI: Error code: 400 - {'error': {'message': \"We could not parse the JSON body of your request. (HINT: This likely means you aren't using your HTTP library correctly. The OpenAI API expects a JSON payload, but what was sent was not valid JSON. If you have trouble figuring out how to fix this, please contact us through our help center at help.openai.com.)\", 'type': 'invalid_request_error', 'param': None, 'code': None}}"
-    },
-    {
-      "meeting_id": "87657852108",
-      "error": "Error code: 400 - {'error': {'message': \"We could not parse the JSON body of your request. (HINT: This likely means you aren't using your HTTP library correctly. The OpenAI API expects a JSON payload, but what was sent was not valid JSON. If you have trouble figuring out how to fix this, please contact us through our help center at help.openai.com.)\", 'type': 'invalid_request_error', 'param': None, 'code': None}}"
-    }
-  ]
+  "errors": []
 }
